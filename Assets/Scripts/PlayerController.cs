@@ -1,0 +1,57 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class Boundary
+{
+    public float xmin, xmax, zmin, zmax;
+}
+
+public class PlayerController : MonoBehaviour {
+
+    private Rigidbody spaceship;
+    private float nextShot;
+    private AudioSource gun;
+
+    public float speed;
+    public float tilt;
+    public Boundary boundary;
+
+    public GameObject shot;
+    public Transform shotSpawn;
+    public float fireRate;
+    
+
+	// Use this for initialization
+	void Start () {
+        spaceship = GetComponent<Rigidbody>();
+        nextShot = 0.0f;
+        gun = GetComponent<AudioSource>();
+    }
+
+    void Update() {
+        if (Input.GetButton("Fire1") && Time.time > nextShot)
+        {
+            nextShot = Time.time + fireRate;
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+            gun.Play();
+        }
+    }
+
+    // Update is called once per frame
+    void FixedUpdate () {
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+
+        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        spaceship.velocity = movement * speed;
+        spaceship.position = new Vector3
+          (
+            Mathf.Clamp(spaceship.position.x, boundary.xmin, boundary.xmax), 
+            0.0f, 
+            Mathf.Clamp(spaceship.position.z, boundary.zmin, boundary.zmax)
+          );
+        spaceship.rotation = Quaternion.Euler(0.0f, 0.0f, moveHorizontal * -tilt);
+	}
+}
