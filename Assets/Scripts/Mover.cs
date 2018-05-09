@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour {
 
-    private Rigidbody bolt;
+    private Rigidbody rb;
 
     public float speed;
 
 	// Use this for initialization
 	void Start () {
-        bolt = GetComponent<Rigidbody>();
-        bolt.velocity = transform.forward * speed;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+        rb = GetComponent<Rigidbody>();
+        rb.velocity = transform.forward * speed;
 	}
 }
