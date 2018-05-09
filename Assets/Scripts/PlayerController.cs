@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Boundary
 {
-    public float xmin, xmax, zmin, zmax;
+    public float xMin, xMax, zMin, zMax;
 }
 
 public class PlayerController : MonoBehaviour {
@@ -48,9 +48,9 @@ public class PlayerController : MonoBehaviour {
         spaceship.velocity = movement * speed;
         spaceship.position = new Vector3
           (
-            Mathf.Clamp(spaceship.position.x, boundary.xmin, boundary.xmax), 
+            Mathf.Clamp(spaceship.position.x, boundary.xMin, boundary.xMax), 
             0.0f, 
-            Mathf.Clamp(spaceship.position.z, boundary.zmin, boundary.zmax)
+            Mathf.Clamp(spaceship.position.z, boundary.zMin, boundary.zMax)
           );
         spaceship.rotation = Quaternion.Euler(0.0f, 0.0f, moveHorizontal * -tilt);
 	}
