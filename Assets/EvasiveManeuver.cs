@@ -14,12 +14,14 @@ public class EvasiveManeuver : MonoBehaviour {
 
     private Rigidbody rb;
     private float currentSpeed;
+    private float currentRotation;
     private float targetManeuver;
     
     // Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
         currentSpeed = rb.velocity.z;
+        currentRotation = rb.rotation.y;
         StartCoroutine(Evade());
     }
 	
@@ -33,7 +35,7 @@ public class EvasiveManeuver : MonoBehaviour {
                 0.0f,
                 Mathf.Clamp(rb.position.z, boundary.zMin, boundary.zMax)
             );
-        rb.rotation = Quaternion.Euler(0.0f, 180f, rb.velocity.x * tilt);
+        rb.rotation = Quaternion.Euler(0.0f, currentRotation, rb.velocity.x * tilt);
 	}
 
     IEnumerator Evade()
